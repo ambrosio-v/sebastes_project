@@ -1,0 +1,78 @@
+---
+title: "sebastes"
+author: "Ambrosio"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+import tree
+```{r}
+#Messing around with trees
+library(ape)
+tree_venom <- read.tree("C:/witteLab/Fasta_files/venom_w_gaps_2.fasta.treefile")
+plot(tree)
+```
+import COI tree
+
+```{r}
+library(ape)
+tree_COI_a <- read.tree("C:/witteLab/Fasta_files/COI_partial.fasta.treefile")
+plot(tree_COI_a)
+```
+
+lets see if I can manipulate the original fasta file with aligned COI
+First lests see if I can manipulate the tree directly
+```{r}
+head(tree_COI_a)
+```
+Okay so I need to replace the $tip.label with the name that corresponds to that accession number. I have a file with these acession 3s and the name here
+```{r}
+COI_label <-read.FASTA("C:/witteLab/Fasta_files/COI_partial.fasta")
+```
+
+```{r}
+head(COI_label)
+
+```
+I wanna split lables into three columns Acession #, Name, description
+
+```{r}
+library(dplyr)
+library(stringr)
+
+fasta_names <- names(COI_label)
+
+mapping_df <- data.frame(
+  full_label = fasta_names
+) %>%
+  mutate(
+    accession = word(full_label, 1),
+    genus = word(full_label, 2),
+    species = word(full_label, 3),
+    genus_species = paste(genus, species)
+  )
+```
+
+check
+```{r}
+head(mapping_df)
+```
+checking they match exactly
+
+```{r}
+setdiff(tree_COI_a$tip.label, mapping_df$accession)
+```
+return zero character is good news no mismatching
+
+now rename tips
+
+```{r}
+tree_COI_a$tip.label <- mapping_df$genus_species[
+  match(tree_COI_a$tip.label, mapping_df$accession)
+]
+```
+
+```{r}
+plot(tree_COI_a, cex = 0.7)
+```
+
