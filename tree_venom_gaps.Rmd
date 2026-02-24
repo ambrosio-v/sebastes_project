@@ -30,6 +30,15 @@ plot(tree_5_rooted,
 ```
 Save to PDF
 ```{r}
+pdf("tree_5.pdf", width = 14, height = 14) #rooted at acanthropagas latus 1
 
+par(mar = c(1, 1, 1, 1))
+plot(tree_5,
+      align.tip.label = TRUE,
+     type = "phylogram",
+     cex = 0.5,
+     no.margin = TRUE)
+
+#publication ready
 ```
 

@@ -5,13 +5,9 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
-import tree
-```{r}
-#Messing around with trees
-library(ape)
-tree_venom <- read.tree("C:/witteLab/Fasta_files/venom_w_gaps_2.fasta.treefile")
-plot(tree)
-```
+
+
+
 import COI tree
 
 ```{r}
@@ -20,12 +16,16 @@ tree_COI_a <- read.tree("C:/witteLab/Fasta_files/COI_partial.fasta.treefile")
 plot(tree_COI_a)
 ```
 
-lets see if I can manipulate the original fasta file with aligned COI
-First lests see if I can manipulate the tree directly
+lets see if I can manipulate the original fasta file with aligned COI First lests see if I can manipulate the tree directly
+
 ```{r}
 head(tree_COI_a)
 ```
-Okay so I need to replace the $tip.label with the name that corresponds to that accession number. I have a file with these acession 3s and the name here
+
+Okay so I need to replace the \$tip.label with the name that corresponds to that accession number. I have a file with these acession 3s and the name here
+
+
+## ask if maybe I need to work with edge or edg length to change the branches. Or are thoes variables the certainty
 ```{r}
 COI_label <-read.FASTA("C:/witteLab/Fasta_files/COI_partial.fasta")
 ```
@@ -34,6 +34,7 @@ COI_label <-read.FASTA("C:/witteLab/Fasta_files/COI_partial.fasta")
 head(COI_label)
 
 ```
+
 I wanna split lables into three columns Acession #, Name, description
 
 ```{r}
@@ -54,14 +55,17 @@ mapping_df <- data.frame(
 ```
 
 check
+
 ```{r}
 head(mapping_df)
 ```
+
 checking they match exactly
 
 ```{r}
 setdiff(tree_COI_a$tip.label, mapping_df$accession)
 ```
+
 return zero character is good news no mismatching
 
 now rename tips
@@ -75,13 +79,27 @@ tree_COI_a$tip.label <- mapping_df$genus_species[
 ```{r}
 plot(tree_COI_a, cex = 0.5)
 ```
+
 ```{r}
 # expand branche with ladder, and align lables
 
 tree_COI_a <- ladderize(tree_COI_a)
+par(mar = c(1, 1, 1, 1))
 plot(tree_COI_a,
     align.tip.label = TRUE,
      cex = 0.8,
      no.margin = TRUE)
+pdf("tree_COI_a.pdf", width = 14, height = 40) #rooted at acanthropagas latus 
 ```
+
+```{r}
+
+```
+
+
+
+
+
+
+
 
