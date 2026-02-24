@@ -1,0 +1,12 @@
+---
+title: "Venom_no_gaps"
+format: html
+editor: visual
+---
+
+## sebastes venom alignment withut gaps
+
+```{r}
+
+```
+
