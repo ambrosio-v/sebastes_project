@@ -7,6 +7,62 @@ editor: visual
 ## sebastes venom alignment withut gaps
 
 ```{r}
+library(ape)
+tree_3 <- read.tree("C:/witteLab/Fasta_files/venom_no_gaps.fasta.treefile")
+plot(tree_3)
+```
+I would like to force the outgroup, pg 50 of analysis of phylogenetic evolution in R book.  check if the tree is rooted
+
+```{r}
+is.rooted(tree_3)
+```
+not rooted. Next make a root
+
+```{r}
+tree_3$tip.label # check the names of the nodes, look for root
+```
+set root to Acanthopagrus
+```{r}
+root(tree_3,"Acanthopagrus_latus_2")
+```
+now lets see if I can view it
+```{r}
+plot(tree_3)
+```
+
+This did not work
+```{r}
+library(ape)
+
+tree_3_rooted <- root(tree_3,
+                      outgroup = "Acanthopagrus_latus_2",
+                      resolve.root = TRUE)
+```
+
+check
+```{r}
+plot(tree_3_rooted)
+```
+
+```{r}
+plot(tree_3_rooted, cex = 0.6) #change label size
+```
+```{r}
+par(mar = c(1, 1, 1, 8))  # increase right margin
+plot(tree_3_rooted, cex = 0.6) # change margins
+```
+
+change layout
+```{r}
+plot(tree_3_rooted, type = "cladogram")
+```
+try circluar
+```{r}
+plot(tree_3_rooted, type = "fan", cex = 0.6)
+```
+```{r}
+pdf("tree_3_rooted.pdf", width = 12, height = 16)
+plot(tree_3_rooted, cex = 0.6)
 
 ```
 
