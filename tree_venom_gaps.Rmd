@@ -1,0 +1,35 @@
+---
+title: "tree_venom_gaps"
+author: "Ambrosio"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(ape)
+```
+Root it at Acanthapagos 1
+```{r}
+is.rooted(tree_5) # is it rooted?
+```
+```{r}
+tree_5$tip.label # check the names of the nodes, look for root
+```
+I wanna root Acanthopagrus_latus_1
+```{r}
+
+
+tree_5_rooted <- root(tree_5,
+                      outgroup = "Acanthopagrus_latus_1",
+                      resolve.root = TRUE)
+tree_5_rooted <- ladderize(tree_5_rooted)
+plot(tree_5_rooted,
+    align.tip.label = TRUE,
+     cex = 0.5,
+     no.margin = TRUE)
+```
+Save to PDF
+```{r}
+
+```
+

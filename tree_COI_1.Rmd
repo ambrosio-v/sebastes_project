@@ -73,6 +73,15 @@ tree_COI_a$tip.label <- mapping_df$genus_species[
 ```
 
 ```{r}
-plot(tree_COI_a, cex = 0.7)
+plot(tree_COI_a, cex = 0.5)
+```
+```{r}
+# expand branche with ladder, and align lables
+
+tree_COI_a <- ladderize(tree_COI_a)
+plot(tree_COI_a,
+    align.tip.label = TRUE,
+     cex = 0.8,
+     no.margin = TRUE)
 ```
 
