@@ -66,3 +66,40 @@ plot(tree_3_rooted, cex = 0.6)
 
 ```
 
+```{r}
+par(mar = c(1, 1, 1, 1))
+plot(tree_3_rooted,
+     type = "fan",
+     cex = 0.5,
+     no.margin = TRUE)
+```
+```{r}
+pdf("tree_3_rooted.pdf", width = 14, height = 14)
+
+par(mar = c(1, 1, 1, 1))
+plot(tree_3_rooted,
+     type = "fan",
+     cex = 0.5,
+     no.margin = TRUE)
+
+#publication ready 
+```
+
+```{r}
+library(ape)
+
+pdf("tree_aligned.pdf", width = 18, height = 24)
+
+par(mar = c(2, 2, 2, 8))
+
+plot(tree_3_rooted,
+     type = "phylogram",
+     cex = 0.8,
+     label.offset = 0.01)
+
+# Align labels
+axisPhylo()
+
+
+```
+
