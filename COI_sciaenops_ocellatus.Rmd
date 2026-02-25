@@ -1,0 +1,62 @@
+---
+title: "COI_s.ocellatus"
+author: "Ambrosio"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(ape)
+```
+
+```{r}
+tree_6 <- read.tree("C:/witteLab/Fasta_files/COI_sciaenops_ocellatus.fasta.treefile") #import tree into invioronment 
+```
+
+```{r}
+plot(tree_6) #plot tree
+
+```
+
+```{r}
+head(tree_6) # look at what the vectors are called
+
+```
+
+
+
+```{r}
+#make a vector for the labels to manipute 
+
+COI_labelc <-read.FASTA("C:/witteLab/Fasta_files/COI_sciaenops_ocellatus.fasta.treefile")
+```
+
+
+
+```{r}
+library(stringr)
+
+fasta_names <- names(COI_labelc)
+
+mapping_df <- data.frame(
+  full_label = fasta_names
+) %>%
+  mutate(
+    accession = word(full_label, 1),
+    genus = word(full_label, 2),
+    species = word(full_label, 3),
+    genus_species = paste(genus, species)
+  )
+
+
+```
+
+
+```{r}
+is.rooted(tree_6) # is it rooted?
+```
+
+```{r}
+tree_6$tip.label # check the names of the nodes, look for root
+```
+
