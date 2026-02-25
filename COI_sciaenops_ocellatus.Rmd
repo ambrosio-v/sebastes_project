@@ -10,7 +10,7 @@ library(ape)
 ```
 
 ```{r}
-tree_6 <- read.tree("C:/witteLab/Fasta_files/COI_sciaenops_ocellatus.fasta.treefile") #import tree into invioronment 
+tree_6 <- read.tree("C:/witteLab/Fasta_files/COI_sciaenops_ocellatus.fasta.treefile") #import tree into environment 
 ```
 
 ```{r}
@@ -19,44 +19,82 @@ plot(tree_6) #plot tree
 ```
 
 ```{r}
-head(tree_6) # look at what the vectors are called
+tree_6$tip.label # look at what the vectors are called
 
 ```
 
 
 
 ```{r}
-#make a vector for the labels to manipute 
+library(ape)
 
-COI_labelc <-read.FASTA("C:/witteLab/Fasta_files/COI_sciaenops_ocellatus.fasta.treefile")
+fasta_file <- read.FASTA("C:/witteLab/Fasta_files/COI_sciaenops_ocellatus.fasta")
+```
+
+
+```{r}
+#extract header names
+fasta_names <- names(fasta_file)
+head(fasta_names)
 ```
 
 
 
 ```{r}
+library(dplyr)
 library(stringr)
 
-fasta_names <- names(COI_labelc)
-
-mapping_df <- data.frame(
-  full_label = fasta_names
-) %>%
+mapping_df <- data.frame(full_label = fasta_names) %>%
   mutate(
     accession = word(full_label, 1),
     genus = word(full_label, 2),
     species = word(full_label, 3),
     genus_species = paste(genus, species)
   )
+```
 
+```{r}
+tree_labels_df <- data.frame(accession = tree_6$tip.label) # match to tree tip labels
 
+tree_labels_df <- left_join(tree_labels_df, mapping_df, by = "accession")
+```
+
+## This is another option to change the tiplabel to from the acession to the corresponding genus and species name that does not require join
+
+label_vector <- mapping_df$genus_species
+names(label_vector) <- mapping_df$accession
+
+tree_6$tip.label <- label_vector[tree_6$tip.label]
+
+```{r}
+#replace tip labels
+tree_6$tip.label <- tree_labels_df$genus_species
+```
+
+```{r}
+plot(tree_6, cex = 0.5)
 ```
 
 
 ```{r}
 is.rooted(tree_6) # is it rooted?
+#ist not rooted but it did root properly with s.ocellatus and acanthropagus as the outgroup
 ```
 
 ```{r}
-tree_6$tip.label # check the names of the nodes, look for root
+#tree_6$tip.label # check the names of the nodes, look for root
+# its a long list and I don't want to run it every time. the tree is correctly displaying the out group
 ```
+This code makes it look nice for a poster
 
+```{r}
+tree_6 <- ladderize(tree_6)
+
+plot(tree_6, 
+     align.tip.label = TRUE,
+     cex = 0.7)
+```
+for poster output
+pdf("COI_tree_poster.pdf", width = 36, height = 44)
+plot(tree_6, cex = 1)
+dev.off()
