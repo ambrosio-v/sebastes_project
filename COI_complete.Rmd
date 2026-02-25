@@ -24,8 +24,9 @@ COI_labelb <-read.FASTA("C:/witteLab/Fasta_files/COI_complete.fasta.treefile")
 fix labels
 ```{r}
 library(stringr)
+library(dplyr)
 
-fasta_names <- names(COI_b)
+fasta_names <- names(tree_COI_b)
 
 mapping_df <- data.frame(
   full_label = fasta_names
@@ -39,6 +40,6 @@ mapping_df <- data.frame(
 ```
 
 ```{r}
-plot()
+plot(tree_COI_b)
 ```
 

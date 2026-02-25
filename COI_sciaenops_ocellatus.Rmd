@@ -10,7 +10,7 @@ library(ape)
 ```
 
 ```{r}
-tree_6 <- read.tree("C:/witteLab/Fasta_files/COI_sciaenops_ocellatus.fasta.treefile") #import tree into environment 
+tree_6 <- read.tree("C:/witteLab/sebastes_github/Fasta_files/COI_sciaenops_ocellatus.fasta.treefile") #import tree into environment 
 ```
 
 ```{r}
@@ -28,7 +28,7 @@ tree_6$tip.label # look at what the vectors are called
 ```{r}
 library(ape)
 
-fasta_file <- read.FASTA("C:/witteLab/Fasta_files/COI_sciaenops_ocellatus.fasta")
+fasta_file <- read.FASTA("C:/witteLab/sebastes_github/Fasta_files/COI_sciaenops_ocellatus.fasta")
 ```
 
 
